@@ -14,8 +14,8 @@ services:
       - --entrypoints.https.address=:443
       - --entrypoints.https.http.tls.certresolver=cloudflare
       # Logs
-      - '--accesslog.filepath=/logs/access.log'
-      - '--accesslog.format=json'
+      #- '--accesslog.filepath=/logs/access.log'
+      #- '--accesslog.format=json'
       - '--log.filepath=/logs/traefik.log'
       - '--log.format=json'
       - '--log.level=${TRAEFIK_LOG_LEVEL:-ERROR}'
