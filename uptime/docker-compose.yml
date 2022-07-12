@@ -1,0 +1,22 @@
+# https://hub.docker.com/r/louislam/uptime-kuma
+version: '3.9'
+services:
+  uptime:
+    container_name: uptime
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    image: louislam/uptime-kuma:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.uptime-router.rule=Host(`${TRAEFIK_HOST}`)
+      - traefik.http.services.uptime-service.loadbalancer.server.port=3001
+    networks:
+      - containers
+    volumes:
+      - ../data/uptime:/app/data
+    restart: unless-stopped
+
+networks:
+  containers:
+    external: true
