@@ -1,0 +1,25 @@
+# https://hub.docker.com/r/linuxserver/heimdall
+version: '3.9'
+services:
+  heimdall:
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-Europe/Paris}
+    image: lscr.io/linuxserver/heimdall
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.heimdall-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.heimdall-router.rule=Host(`${TRAEFIK_HOST}`)
+      - traefik.http.services.heimdall-service.loadbalancer.server.port=443
+      - traefik.http.services.heimdall-service.loadbalancer.server.scheme=https
+    networks:
+      - containers
+    volumes:
+      - ../data/heimdall:/config
+    restart: unless-stopped
+
+networks:
+  containers:
+    external: true

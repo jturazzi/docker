@@ -1,0 +1,62 @@
+# https://hub.docker.com/_/traefik
+version: '3.9'
+services:
+  traefik:
+    container_name: traefik
+    command:
+      # Certificates
+      - --certificatesresolvers.cloudflare.acme.dnschallenge=true
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.cloudflare.acme.storage=/config/acme.json
+      # Entrypoints
+      - --entrypoints.http.address=:80
+      - --entrypoints.http.http.redirections.entrypoint.to=https
+      - --entrypoints.https.address=:443
+      - --entrypoints.https.http.tls.certresolver=cloudflare
+      # Logs
+      - '--accesslog.filepath=/logs/access.log'
+      - '--accesslog.format=json'
+      - '--log.filepath=/logs/traefik.log'
+      - '--log.format=json'
+      - '--log.level=${TRAEFIK_LOG_LEVEL:-ERROR}'
+      # Provider
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.directory=/config/dynamic_conf/
+      - --providers.file.watch=true
+      # Disable SSL verification on backend
+      - --serverstransport.insecureskipverify=true
+      # Others
+      - --api=true
+      - --api.dashboard=true
+      - --ping
+    environment:
+      - CLOUDFLARE_DNS_API_TOKEN=${TRAEFIK_CLOUDFLARE_DNS_API_TOKEN-}
+      - TZ=${TZ:-Europe/Paris}
+    healthcheck:
+      test: ['CMD', 'traefik', 'healthcheck', '--ping']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    hostname: traefik
+    image: traefik:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.traefik-router.rule=Host(`${TRAEFIK_HOST}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.traefik-router.service=api@internal
+      - traefik.http.services.traefik-service.loadbalancer.server.port=80
+    networks:
+      - containers
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    volumes:
+      - ../data/traefik/config:/config
+      - ../data/traefik/logs:/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  containers:
+    external: true

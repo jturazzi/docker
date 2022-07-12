@@ -1,0 +1,25 @@
+# https://hub.docker.com/r/portainer/portainer-ce
+version: '3.9'
+services:
+  portainer:
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    hostname: portainer
+    image: portainer/portainer-ce:linux-amd64
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.portainer-router.rule=Host(`${TRAEFIK_HOST}`)
+      - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+    networks:
+      - containers
+    restart: unless-stopped
+    volumes:
+      - ../data/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  containers:
+    external: true

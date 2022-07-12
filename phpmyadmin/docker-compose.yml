@@ -1,0 +1,24 @@
+# https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+version: '3.9'
+services:
+  phpmyadmin:
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOSTS=${PHPMYADMIN_PMA_HOSTS}
+      - PMA_VERBOSES=${PHPMYADMIN_PMA_VERBOSES}
+      - HIDE_PHP_VERSION=true
+      - TZ=${TZ:-Europe/Paris}
+    hostname: phpmyadmin
+    image: phpmyadmin:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.phpmyadmin-router.rule=Host(`${TRAEFIK_HOST}`)
+      - traefik.http.services.phpmyadmin-service.loadbalancer.server.port=80
+    networks:
+      - containers
+    restart: unless-stopped
+
+networks:
+  containers:
+    external: true

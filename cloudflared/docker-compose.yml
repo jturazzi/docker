@@ -1,0 +1,16 @@
+# https://hub.docker.com/r/cloudflare/cloudflared
+version: '3.9'
+services:
+  cloudflared:
+    command: ${COMMAND}
+    container_name: cloudflared
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    image: cloudflare/cloudflared:latest
+    networks:
+      - containers
+    restart: unless-stopped
+
+networks:
+  containers:
+    external: true

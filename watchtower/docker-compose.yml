@@ -1,0 +1,23 @@
+# https://hub.docker.com/r/containrrr/watchtower
+version: '3.9'
+services:
+  watchtower:
+    container_name: watchtower
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL:-}
+      - WATCHTOWER_NOTIFICATION_TEMLATE={{range .}}{{.Time.Format "12-01-2020 15:04:05"}} ({{.Level}})\':\' {{.Message}}{{println}}{{end}}
+      - WATCHTOWER_SCHEDULE=0 0 7 * * 1-5
+    hostname: ${HOSTNAME:-}
+    image: containrrr/watchtower:latest
+    networks:
+      - containers
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  containers:
+    external: true
