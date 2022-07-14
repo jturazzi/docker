@@ -11,7 +11,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.heimdall-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
-      - traefik.http.routers.heimdall-router.rule=Host(`${TRAEFIK_HOST}`)
+      - traefik.http.routers.heimdall-router.rule=${TRAEFIK_RULE:-}
       - traefik.http.services.heimdall-service.loadbalancer.server.port=443
       - traefik.http.services.heimdall-service.loadbalancer.server.scheme=https
     networks:
