@@ -10,13 +10,10 @@ services:
       - TZ=${TZ:-Europe/Paris}
     hostname: phpmyadmin
     image: phpmyadmin:latest
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.phpmyadmin-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
-      - traefik.http.routers.phpmyadmin-router.rule=${TRAEFIK_RULE:-}
-      - traefik.http.services.phpmyadmin-service.loadbalancer.server.port=80
     networks:
       - containers
+    ports:
+      - ${PORT}:80
     restart: unless-stopped
 
 networks:

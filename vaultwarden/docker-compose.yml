@@ -9,13 +9,10 @@ services:
       - TZ=${TZ:-Europe/Paris}
     hostname: vaultwarden
     image: vaultwarden/server:latest
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.vaultwarden-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
-      - traefik.http.routers.vaultwarden-router.rule=${TRAEFIK_RULE:-}
-      - traefik.http.services.vaultwarden-service.loadbalancer.server.port=80
     networks:
       - containers
+    ports:
+      - 10002:80
     restart: unless-stopped
     volumes:
       - ../data/vaultwarden:/data
