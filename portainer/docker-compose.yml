@@ -5,13 +5,11 @@ services:
     container_name: portainer
     command: -H unix:///var/run/docker.sock
     environment:
-      - TZ=${TZ:-Europe/Paris}
+      - TZ=Europe/Paris
     hostname: portainer
-    image: portainer/portainer-ce:linux-amd64
+    image: portainer/portainer-ce:latest
     networks:
       - containers
-    ports:
-      - ${PORT}:9000
     restart: unless-stopped
     volumes:
       - ../data/portainer:/data
