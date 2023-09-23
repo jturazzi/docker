@@ -5,12 +5,8 @@ services:
     container_name: mariadb
     environment: 
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - TZ=${TZ:-Europe/Paris}
+      - TZ=Europe/Paris
     image: mariadb:latest
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 5
     hostname: mariadb
     networks:
       - containers
