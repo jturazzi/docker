@@ -1,16 +1,12 @@
-# https://hub.docker.com/r/cloudflare/cloudflared
+# https://hub.docker.com/r/cloudflared/cloudflared/
 version: '3.9'
 services:
   cloudflared:
-    command: ${COMMAND}
     container_name: cloudflared
+    command: tunnel run
     environment:
-      - TZ=${TZ:-Europe/Paris}
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      - TZ=Europe/Paris
+    hostname: cloudflared
     image: cloudflare/cloudflared:latest
-    networks:
-      - containers
     restart: unless-stopped
-
-networks:
-  containers:
-    external: true
