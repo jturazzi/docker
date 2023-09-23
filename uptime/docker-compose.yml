@@ -6,13 +6,17 @@ services:
     environment:
       - TZ=${TZ:-Europe/Paris}
     image: louislam/uptime-kuma:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.uptime-router.rule=${TRAEFIK_RULE:-}
+      - traefik.http.routers.uptime-router.tls=true
+      - traefik.http.services.uptime-service.loadbalancer.server.port=3001
     networks:
       - containers
-    ports:
-    - ${PORT}:3001
+    restart: unless-stopped
     volumes:
       - ../data/uptime:/app/data
-    restart: unless-stopped
 
 networks:
   containers:
