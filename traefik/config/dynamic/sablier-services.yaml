@@ -1,0 +1,24 @@
+http:
+    middlewares:
+        phpmyadmin-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: phpMyAdmin
+                        refreshFrequency: 2s
+                        showDetails: false
+                        theme: ghost
+                    names: phpmyadmin
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 5m
+        portainer-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: Portainer
+                        refreshFrequency: 2s
+                        showDetails: false
+                        theme: ghost
+                    names: portainer
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 5m

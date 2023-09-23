@@ -1,0 +1,10 @@
+http:
+  services:
+    phpmyadmin-service:
+      loadBalancer:
+        servers:
+        - url: "http://phpmyadmin:80/"
+    portainer-service:
+      loadBalancer:
+        servers:
+        - url: "http://portainer:9000/"

@@ -1,0 +1,12 @@
+http:
+    routers:
+        phpmyadmin-router:
+            rule: "Host(`phpmyadmin.app.local`)"
+            middlewares: "phpmyadmin-sablier@file"
+            service: "phpmyadmin-service"
+            tls: "true"
+        portainer-router:
+            rule: "Host(`portainer.app.local`)"
+            middlewares: "portainer-sablier@file"
+            service: "portainer-service"
+            tls: "true"

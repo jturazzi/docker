@@ -1,0 +1,64 @@
+version: '3.9'
+services:
+  # https://hub.docker.com/_/traefik
+  traefik:
+    container_name: traefik
+    command:
+      # Entrypoints
+      - --entrypoints.https.address=:443
+      - --entryPoints.https.forwardedHeaders.trustedIPs=172.100.0.0/16
+      # Logs
+      - '--accesslog.filepath=/logs/access.log'
+      - '--accesslog.bufferingsize=100'
+      - '--accesslog.format=json'
+
+      - '--log.filepath=/logs/traefik.log'
+      - '--log.format=json'
+      - '--log.level=${TRAEFIK_LOG_LEVEL:-ERROR}'
+      # Plugins
+      - --experimental.plugins.sablier.moduleName=github.com/acouvreur/sablier
+      - --experimental.plugins.sablier.version=v1.3.0
+      # Provider
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.directory=/config/dynamic/
+      - --providers.file.watch=true
+      # Disable SSL verification on backend
+      - --serverstransport.insecureskipverify=true
+      # Others
+      - --api.dashboard=true
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    image: traefik:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-router.middlewares=${TRAEFIK_MIDDLEWARES:-}
+      - traefik.http.routers.traefik-router.rule=${TRAEFIK_RULE:-}
+      - traefik.http.routers.traefik-router.tls=true
+      - traefik.http.routers.traefik-router.service=api@internal
+      - traefik.http.services.traefik-service.loadbalancer.server.port=80
+    networks:
+      - containers
+    ports:
+      - ${HTTP:-80}:80
+      - ${HTTPS:-443}:443
+    restart: unless-stopped
+    volumes:
+      - ./config:/config
+      - ../data/traefik:/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # https://hub.docker.com/r/acouvreur/sablier
+  sablier:
+    container_name: sablier
+    image: acouvreur/sablier:latest
+    hostname: sablier
+    networks:
+      - containers
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+networks:
+  containers:
+    external: true
