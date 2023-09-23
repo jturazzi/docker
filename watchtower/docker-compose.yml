@@ -6,9 +6,6 @@ services:
     environment:
       - TZ=${TZ:-Europe/Paris}
       - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_NOTIFICATIONS=shoutrrr
-      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL:-}
-      - WATCHTOWER_NOTIFICATION_TEMLATE={{range .}}{{.Time.Format "12-01-2020 15:04:05"}} ({{.Level}})\':\' {{.Message}}{{println}}{{end}}
       - WATCHTOWER_SCHEDULE=0 0 7 * * 1-5
     hostname: ${HOSTNAME:-}
     image: containrrr/watchtower:latest
