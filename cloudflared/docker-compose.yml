@@ -8,5 +8,11 @@ services:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
       - TZ=Europe/Paris
     hostname: cloudflared
+    networks:
+      - containers
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
+
+networks:
+  containers:
+    external: true
