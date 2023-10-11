@@ -1,0 +1,19 @@
+# https://hub.docker.com/r/nicolargo/glances
+version: '3.9'
+services:
+  glances:
+    container_name: glances
+    environment:
+      - TZ=Europe/Paris
+      - GLANCES_OPT=-w
+    image: nicolargo/glances:latest
+    hostname: glances
+    networks:
+      - containers
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  containers:
+    external: true
