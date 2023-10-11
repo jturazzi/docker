@@ -1,0 +1,21 @@
+# https://hub.docker.com/r/ajnart/homarr
+version: '3.9'
+services:
+  homarr:
+    container_name: homarr
+    environment:
+      - DISABLE_EDIT_MODE=TRUE
+      - EDIT_MODE_PASSWORD=${EDIT_MODE_PASSWORD}
+      - TZ=Europe/Paris
+    image: ghcr.io/ajnart/homarr:latest
+    hostname: homarr
+    networks:
+      - containers
+    restart: unless-stopped
+    volumes:
+      - ../data/homarr/configs:/app/data/configs
+      - ../data/homarr/icons:/app/public/icons
+
+networks:
+  containers:
+    external: true
