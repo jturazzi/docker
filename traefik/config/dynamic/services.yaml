@@ -1,5 +1,9 @@
 http:
   services:
+    glances-service:
+      loadBalancer:
+        servers:
+        - url: "http://glances:61208/"
     phpmyadmin-service:
       loadBalancer:
         servers:
@@ -8,3 +12,7 @@ http:
       loadBalancer:
         servers:
         - url: "http://portainer:9000/"
+    homarr-service:
+      loadBalancer:
+        servers:
+        - url: "http://homarr:7575/"

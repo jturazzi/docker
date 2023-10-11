@@ -1,5 +1,10 @@
 http:
     routers:
+        glances-router:
+            rule: "Host(`glances.app.local`)"
+            middlewares: "glances-sablier@file"
+            service: "glances-service"
+            tls: "true"
         phpmyadmin-router:
             rule: "Host(`phpmyadmin.app.local`)"
             middlewares: "phpmyadmin-sablier@file"
@@ -9,4 +14,9 @@ http:
             rule: "Host(`portainer.app.local`)"
             middlewares: "portainer-sablier@file"
             service: "portainer-service"
+            tls: "true"
+        homarr-router:
+            rule: "Host(`homarr.app.local`)"
+            middlewares: "homarr-sablier@file"
+            service: "homarr-service"
             tls: "true"

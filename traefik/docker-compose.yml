@@ -17,7 +17,7 @@ services:
       - '--log.level=${TRAEFIK_LOG_LEVEL:-ERROR}'
       # Plugins
       - --experimental.plugins.sablier.moduleName=github.com/acouvreur/sablier
-      - --experimental.plugins.sablier.version=v1.3.0
+      - --experimental.plugins.sablier.version=v1.4.0
       # Provider
       - --providers.docker
       - --providers.docker.exposedbydefault=false
@@ -51,7 +51,7 @@ services:
   # https://hub.docker.com/r/acouvreur/sablier
   sablier:
     container_name: sablier
-    image: acouvreur/sablier:latest
+    image: acouvreur/sablier:1.4
     hostname: sablier
     networks:
       - containers

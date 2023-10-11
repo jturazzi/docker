@@ -1,5 +1,16 @@
 http:
     middlewares:
+        glances-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: Glances
+                        refreshFrequency: 2s
+                        showDetails: false
+                        theme: ghost
+                    names: glances
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 5m
         phpmyadmin-sablier:
             plugin:
                 sablier:
@@ -20,5 +31,16 @@ http:
                         showDetails: false
                         theme: ghost
                     names: portainer
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 5m
+        homarr-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: Homarr
+                        refreshFrequency: 2s
+                        showDetails: false
+                        theme: ghost
+                    names: homarr
                     sablierUrl: http://sablier:10000
                     sessionDuration: 5m
