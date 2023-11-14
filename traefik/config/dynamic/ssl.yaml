@@ -1,7 +1,7 @@
 tls:
   certificates:
-    - certFile: /config/ssl/app.local.crt
-      keyFile: /config/ssl/app.local.key
+    - certFile: /config/ssl/home.crt
+      keyFile: /config/ssl/home.key
     - certFile: /config/ssl/trz.fr.crt
       keyFile: /config/ssl/trz.fr.key
 

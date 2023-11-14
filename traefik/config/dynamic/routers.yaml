@@ -1,22 +1,27 @@
 http:
     routers:
+        docuseal-router:
+            rule: "Host(`docuseal.app.home`)"
+            middlewares: "docuseal-sablier@file"
+            service: "docuseal-service"
+            tls: "true"
         glances-router:
-            rule: "Host(`glances.app.local`)"
+            rule: "Host(`glances.app.home`)"
             middlewares: "glances-sablier@file"
             service: "glances-service"
             tls: "true"
         phpmyadmin-router:
-            rule: "Host(`phpmyadmin.app.local`)"
+            rule: "Host(`phpmyadmin.app.home`)"
             middlewares: "phpmyadmin-sablier@file"
             service: "phpmyadmin-service"
             tls: "true"
         portainer-router:
-            rule: "Host(`portainer.app.local`)"
+            rule: "Host(`portainer.app.home`)"
             middlewares: "portainer-sablier@file"
             service: "portainer-service"
             tls: "true"
         homarr-router:
-            rule: "Host(`homarr.app.local`)"
+            rule: "Host(`dashboard.app.home`)"
             middlewares: "homarr-sablier@file"
             service: "homarr-service"
             tls: "true"

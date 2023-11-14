@@ -1,5 +1,16 @@
 http:
     middlewares:
+        docuseal-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: DocuSeal
+                        refreshFrequency: 2s
+                        showDetails: false
+                        theme: ghost
+                    names: glances
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 5m
         glances-sablier:
             plugin:
                 sablier:
