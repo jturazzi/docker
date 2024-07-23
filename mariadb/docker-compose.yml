@@ -1,5 +1,4 @@
 # https://hub.docker.com/_/mariadb
-version: '3.9'
 services:
   mariadb:
     container_name: mariadb

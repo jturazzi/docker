@@ -1,5 +1,4 @@
 # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
-version: '3.9'
 services:
   phpmyadmin:
     container_name: phpmyadmin
