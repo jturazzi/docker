@@ -2,17 +2,16 @@
 services:
   portainer:
     container_name: portainer
+    image: portainer/portainer-ce:latest
     command: -H unix:///var/run/docker.sock
+    hostname: portainer
     environment:
       - TZ=${TZ:-Europe/Paris}
-    hostname: portainer
-    image: portainer/portainer-ce:latest
     networks:
       - containers
     restart: unless-stopped
     volumes:
       - ../data/portainer:/data
-      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - "9000:9000"
