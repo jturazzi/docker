@@ -1,5 +1,4 @@
 # https://hub.docker.com/r/ajnart/homarr
-version: '3.9'
 services:
   homarr:
     container_name: homarr
