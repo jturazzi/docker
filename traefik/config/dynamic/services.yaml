@@ -1,13 +1,5 @@
 http:
   services:
-    docuseal-service:
-      loadBalancer:
-        servers:
-        - url: "http://docuseal:3000/"
-    glances-service:
-      loadBalancer:
-        servers:
-        - url: "http://glances:61208/"
     phpmyadmin-service:
       loadBalancer:
         servers:

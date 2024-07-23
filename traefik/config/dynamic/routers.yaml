@@ -1,15 +1,5 @@
 http:
     routers:
-        docuseal-router:
-            rule: "Host(`docuseal.app.home`)"
-            middlewares: "docuseal-sablier@file"
-            service: "docuseal-service"
-            tls: "true"
-        glances-router:
-            rule: "Host(`glances.app.home`)"
-            middlewares: "glances-sablier@file"
-            service: "glances-service"
-            tls: "true"
         phpmyadmin-router:
             rule: "Host(`phpmyadmin.app.home`)"
             middlewares: "phpmyadmin-sablier@file"
